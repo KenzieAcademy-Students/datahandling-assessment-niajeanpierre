@@ -16,24 +16,55 @@ let combinedMovieDataSet = movieDetails
 
 console.log("Combined Movies:", combinedMovieDataSet);
 
+
+
+function movieCard(movies) {
   let display = document.getElementById("gallery");
-combinedMovieDataSet.map((combinedMovieDataSet) => {
-  let html = `<img width="250px" height="300px" src=${combinedMovieDataSet.imageUrl}> <h2>${combinedMovieDataSet.title}</h2> <h3>Cast: ${combinedMovieDataSet.cast}</h3> <p>Year: ${combinedMovieDataSet.year}</p>`
-  display.innerHTML += html;
-}) 
- 
-// combinedMovieDataSet.map((combinedMovieDataSet) => {
-//   let html = `<img width="20px" height="20px" src=${combinedMovieDataSet.imageUrl}>`
-//   display.innerHTML += html;
-// }) 
- 
+  movies.map((movie) => {
+    let card = document.createElement("div");
+    card.classList.add("myCard");
+    card.innerHTML = `<div class = "title"> Title: ${movie.title}</div> 
+  <img width="250px" src=${movie.imageUrl}>
+  <div> Year: ${movie.year}</div>
+  <div> Cast: ${movie.cast}</div>`;
+    display.append(card);
+  });
+}
+////////////////////////////////////////////////////
+let searchButton = document.getElementById("btn");
+////////////////////////////////////////////////////
+function movieSearch(movie) {
+  let gallery = document.getElementById("gallery");
 
+  let searchedTitle = document.getElementById("title").value;
+  let searchedActor = document.getElementById("actor").value;
 
+  let filterTitleSearch = movie.filter((movie) =>
+    movie.title.toLowerCase().includes(searchedTitle.toLowerCase())
+  );
 
+  console.log(filterTitleSearch);
 
+  let filterActorSearch = movie.filter((movie) =>
+    movie.cast.some((castMember) =>
+      castMember.toLowerCase().includes(searchedActor)
+    )
+  );
+  let filterCard = document.createElement("div");
+  filterCard.classList.add("myFilterCard");
+  filterCard.innerHTML = `<div class = "title"> Title: ${movie.title}</div> 
+<img width="250px" src=${movie.imageUrl}>
+<div> Year: ${movie.year}</div>
+<div> Cast: ${movie.cast}</div>`;
+  
 
+  gallery.append(filterCard)
+  return filterTitleSearch && filterActorSearch;
+}
+searchButton.addEventListener("click", function () {
+  display = "";
+  // movieSearch(combinedMovieDataSet);
+  movieCard(movieSearch(combinedMovieDataSet));
+});
 
-
-// window.onload = () => {
-//   MovieCard(movie);
-// }
+movieCard(combinedMovieDataSet);
