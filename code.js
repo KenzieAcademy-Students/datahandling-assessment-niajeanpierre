@@ -13,13 +13,27 @@ let combinedMovieDataSet = movieDetails
     return { ...thisMovie, ...detail };
   })
   .filter((movie) => movie);
+
 console.log("Combined Movies:", combinedMovieDataSet);
 
-console.log("Movies:", movies);
+  let display = document.getElementById("gallery");
+combinedMovieDataSet.map((combinedMovieDataSet) => {
+  let html = `<img width="250px" height="300px" src=${combinedMovieDataSet.imageUrl}> <h2>${combinedMovieDataSet.title}</h2> <h3>Cast: ${combinedMovieDataSet.cast}</h3> <p>Year: ${combinedMovieDataSet.year}</p>`
+  display.innerHTML += html;
+}) 
+ 
+// combinedMovieDataSet.map((combinedMovieDataSet) => {
+//   let html = `<img width="20px" height="20px" src=${combinedMovieDataSet.imageUrl}>`
+//   display.innerHTML += html;
+// }) 
+ 
 
-console.log("MovieDetails:", movieDetails);
 
-function MovieCard(movie) {
-  // creates the HTML and returns it
-}
 
+
+
+
+
+// window.onload = () => {
+//   MovieCard(movie);
+// }
