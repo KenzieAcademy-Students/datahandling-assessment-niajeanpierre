@@ -1,1 +1,22 @@
 /* Write your CSS Here. */
+
+#gallery {
+  display: flex;
+  padding: 10px;
+}
+
+img {
+  display: block;
+}
+
+h2 {
+  display: flex;
+}
+
+h3 {
+  display: flex;
+}
+
+p {
+  display: flex;
+}
