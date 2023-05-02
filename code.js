@@ -16,55 +16,46 @@ let combinedMovieDataSet = movieDetails
 
 console.log("Combined Movies:", combinedMovieDataSet);
 
-
-
 function movieCard(movies) {
+  console.log(movies)
   let display = document.getElementById("gallery");
-  movies.map((movie) => {
-    let card = document.createElement("div");
-    card.classList.add("myCard");
-    card.innerHTML = `<div class = "title"> Title: ${movie.title}</div> 
-  <img width="250px" src=${movie.imageUrl}>
-  <div> Year: ${movie.year}</div>
-  <div> Cast: ${movie.cast}</div>`;
-    display.append(card);
-  });
+  let card = document.createElement("div");
+
+  display.innerHTML = ""
+
+  let cardInfo = movies.map(
+    (movie) =>
+      `<div class="movieCard"> <img width="250px" src=${movie.imageUrl}> <h2>Title: ${movie.title}</h2>
+      <h3>Cast: ${movie.cast}</h3>
+      <h4>Year: ${movie.year}</h4>
+      </div>`
+  );
+
+  card.innerHTML = cardInfo.join("");
+  card.classList.add("movie-card-container")
+  display.append(card);
 }
-////////////////////////////////////////////////////
+
+
+
 let searchButton = document.getElementById("btn");
-////////////////////////////////////////////////////
-function movieSearch(movie) {
-  let gallery = document.getElementById("gallery");
+
+function movieSearch() {
 
   let searchedTitle = document.getElementById("title").value;
   let searchedActor = document.getElementById("actor").value;
 
-  let filterTitleSearch = movie.filter((movie) =>
+  let filterSearch = combinedMovieDataSet.filter((movie) =>
     movie.title.toLowerCase().includes(searchedTitle.toLowerCase())
-  );
+  ).filter((movie) =>
+  movie.cast.some((castMember) =>
+    castMember.toLowerCase().includes(searchedActor)
+  )
+);
+  console.log(filterSearch)
 
-  console.log(filterTitleSearch);
-
-  let filterActorSearch = movie.filter((movie) =>
-    movie.cast.some((castMember) =>
-      castMember.toLowerCase().includes(searchedActor)
-    )
-  );
-  let filterCard = document.createElement("div");
-  filterCard.classList.add("myFilterCard");
-  filterCard.innerHTML = `<div class = "title"> Title: ${movie.title}</div> 
-<img width="250px" src=${movie.imageUrl}>
-<div> Year: ${movie.year}</div>
-<div> Cast: ${movie.cast}</div>`;
-  
-
-  gallery.append(filterCard)
-  return filterTitleSearch && filterActorSearch;
+  movieCard(filterSearch)
 }
-searchButton.addEventListener("click", function () {
-  display = "";
-  // movieSearch(combinedMovieDataSet);
-  movieCard(movieSearch(combinedMovieDataSet));
-});
+searchButton.addEventListener("click", movieSearch);
 
 movieCard(combinedMovieDataSet);
